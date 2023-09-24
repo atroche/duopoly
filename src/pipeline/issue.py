@@ -114,11 +114,22 @@ def get_branch_id(issue):
 
 
 def prepare_branch(issue: Issue, dry_run: bool) -> None:
+    import os
+
     target_dir = get_target_dir(issue)
     if os.path.exists(target_dir):
         shutil.rmtree(target_dir, ignore_errors=True)
     os.makedirs(target_dir, exist_ok=True)
-    repo.clone_repository(f"https://github.com/{issue.repository}.git", target_dir)
+    repo_type = os.getenv("REPO_TYPE", "https")
+    if repo_type == "https":
+        repo_url = f"https://github.com/{issue.repository}.git"
+    elif repo_type == "ssh":
+        repo_url = f"git@github.com:{issue.repository}.git"
+    else:
+        raise ValueError(
+            'REPO_TYPE environment variable must be either "https" or "ssh".'
+        )
+    repo.clone_repository(repo_url, target_dir)
     branch_id = get_branch_id(issue)
     if not dry_run:
         repo.switch_and_reset_branch(branch_id, target_dir)
