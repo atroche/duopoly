@@ -1,6 +1,6 @@
-REPOSITORY_PATH = ["reitzensteinm/duopoly", "reitzensteinm/duopoly-website"]
+REPOSITORY_PATH = ["atroche/duopoly"]
 CODE_PATH = "src"
 GITIGNORE_PATH = ".gitignore"
-ADMIN_USERS = ["reitzensteinm"]
+ADMIN_USERS = ["atroche"]
 TOKEN_LIMIT = 40000
-PR_REVIEWER_USERNAME = "username_here"
+PR_REVIEWER_USERNAME = "atroche"
